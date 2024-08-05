@@ -1,5 +1,5 @@
 // Importa o módulo 'express' para criar um servidor web.
-import { PrismaClient } from "@prisma/client/extension";
+import { PrismaClient } from "@prisma/client";
 import express from "express";
 
 const prisma = new PrismaClient();
