@@ -11,7 +11,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^5.17.0",
+    "@prisma/client": "^5.18.0-dev.13",
+    "conceitos-node-2.0": "file:",
     "express": "^4.19.2"
   },
   "devDependencies": {
