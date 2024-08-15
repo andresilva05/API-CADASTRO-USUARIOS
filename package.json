@@ -11,12 +11,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@prisma/client": "^5.18.0-dev.13",
+    "@prisma/client": "^5.18.0",
     "conceitos-node-2.0": "file:",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2"
   },
   "devDependencies": {
     "nodemon": "^3.1.4",
-    "prisma": "^5.17.0"
+    "prisma": "^5.18.0"
   }
 }

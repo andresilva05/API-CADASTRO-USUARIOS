@@ -18,6 +18,7 @@ app.get("/usuarios", async (req, res) => {
     res.status(200).json(users);
   } catch (error) {
     // Responde com status 500 (Internal Server Error) em caso de erro.
+    console.log(error);
     res.status(500).json({ error: "Erro ao buscar usuários" });
   }
 });
