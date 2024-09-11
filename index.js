@@ -1,32 +1,28 @@
-// Importa o módulo 'express' para criar um servidor web.
-import { PrismaClient } from "@prisma/client";
-import express from "express";
+import { PrismaClient } from "@prisma/client"; // Importando o cliente Prisma para se conectar ao banco de dados
+import cors from 'cors' // Importando o middleware CORS para permitir requisições entre diferentes origens (front e back)
+import express from "express"; // Importando o Express para criar o servidor web
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient(); // Instanciando o cliente Prisma
 
-// Cria uma instância do aplicativo Express.
-const app = express();
+const app = express(); // Criando uma instância do Express
 
-// Middleware que configura o servidor para entender requisições com corpo em JSON.
-app.use(express.json());
+app.use(express.json()); // Middleware para entender requisições em formato JSON
+app.use(cors()); // Middleware para habilitar CORS
 
-// Define uma rota GET na URL '/usuarios' que responde com a lista de usuários.
+// Rota GET para listar usuários
 app.get("/usuarios", async (req, res) => {
   try {
-    const users = await prisma.user.findMany(); // Corrigido: agora 'users' é definido corretamente
-    // Responde com status 200 (OK) e envia o array 'users' em formato JSON.
-    res.status(200).json(users);
+    const users = await prisma.user.findMany(); // Buscando todos os usuários no banco de dados
+    res.status(200).json(users); // Retornando os usuários encontrados
   } catch (error) {
-    // Responde com status 500 (Internal Server Error) em caso de erro.
-    console.log(error);
-    res.status(500).json({ error: "Erro ao buscar usuários" });
+    console.log(error); // Logando o erro no console
+    res.status(500).json({ error: "Erro ao buscar usuários" }); // Retornando erro ao cliente
   }
 });
 
-// Define uma rota POST na URL '/usuarios' para adicionar um novo usuário.
+// Rota POST para criar um novo usuário
 app.post("/usuarios", async (req, res) => {
   try {
-    // Adiciona o corpo da requisição (JSON) ao banco de dados.
     const user = await prisma.user.create({
       data: {
         email: req.body.email,
@@ -34,59 +30,49 @@ app.post("/usuarios", async (req, res) => {
         name: req.body.name,
       },
     });
-
-    console.log(user);
-    // Responde com status 201 (Created) e uma mensagem de sucesso em formato JSON.
-    res.status(201).json({ message: "Usuário criado com sucesso" });
+    res.status(201).json({ message: "Usuário criado com sucesso", user }); // Retornando sucesso ao criar o usuário
   } catch (error) {
-    // Responde com status 500 (Internal Server Error) em caso de erro.
-    console.log(error);
-    res.status(500).json({ error: "Erro ao criar usuário" });
+    console.error(error); // Logando o erro no console
+    res.status(500).json({ error: "Erro ao criar usuário" }); // Retornando erro ao cliente
   }
 });
+
+// Rota PUT para atualizar um usuário existente
 app.put("/usuarios/:id", async (req, res) => {
   try {
-    const { id } = req.params; // Obtém o ID do usuário da URL
+    const { id } = req.params; // Pegando o ID dos parâmetros da URL
     const user = await prisma.user.update({
-      where: {
-        id: id, // Usa o ID para localizar e atualizar o usuário
-      },
+      where: { id: id }, // Buscando e atualizando o usuário pelo ID
       data: {
         email: req.body.email,
         age: req.body.age,
         name: req.body.name,
       },
     });
-
-    console.log(user);
-    // Responde com status 200 (OK) e o usuário atualizado em formato JSON.
-    res.status(200).json({ message: "Usuário atualizado com sucesso", user });
+    res.status(200).json({ message: "Usuário atualizado com sucesso", user }); // Retornando sucesso
   } catch (error) {
-    // Responde com status 500 (Internal Server Error) em caso de erro.
-    console.log(error);
-    res.status(500).json({ error: "Erro ao atualizar usuário" });
+    console.log(error); // Logando o erro no console
+    res.status(500).json({ error: "Erro ao atualizar usuário" }); // Retornando erro ao cliente
   }
 });
 
+// Rota DELETE para deletar um usuário
 app.delete("/usuarios/:id", async (req, res) => {
   try {
-    const { id } = req.params; // Obtém o ID do usuário da URL
-    await prisma.user.delete({
-      where: {
-        id: id, // Usa o ID para localizar e excluir o usuário
-      },
-    });
-    res.status(200).json({ message: "Usuário deletado com sucesso" });
+    const { id } = req.params; // Pegando o ID dos parâmetros da URL
+    await prisma.user.delete({ where: { id: id } }); // Deletando o usuário pelo ID
+    res.status(200).json({ message: "Usuário deletado com sucesso" }); // Retornando sucesso
   } catch (error) {
-    // Responde com status 500 (Internal Server Error) em caso de erro.
-    console.log(error);
-    res.status(500).json({ error: "Erro ao deletar usuário" });
+    console.log(error); // Logando o erro no console
+    res.status(500).json({ error: "Erro ao deletar usuário" }); // Retornando erro ao cliente
   }
 });
 
+// Iniciando o servidor na porta 3000
 app.listen(3000, () => {
   console.log("Servidor rodando na porta 3000");
 });
+
 // - CRIAR ok
 // - LER ok
 // - EDITAR ok
@@ -95,3 +81,7 @@ app.listen(3000, () => {
 // - BUSCAR
 // - FILTRAR
 // - ORDENAR
+
+
+// andresilvadev05
+// 22082005
