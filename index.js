@@ -69,8 +69,8 @@ app.delete("/usuarios/:id", async (req, res) => {
 });
 
 // Iniciando o servidor na porta 3000
-app.listen(3000, () => {
-  console.log("Servidor rodando na porta 3000");
+app.listen(3001, () => {
+  console.log("Servidor rodando na porta 3001");
 });
 
 // - CRIAR ok
