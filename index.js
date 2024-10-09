@@ -22,6 +22,12 @@ app.get("/usuarios", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("API de cadastro de usuários está rodando!");
+});
+
+
+
 // Rota POST para criar um novo usuário
 app.post("/usuarios", async (req, res) => {
   try {
