@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 4001;
 const app = express(); // Criando uma instância do Express
 
 app.use(express.json()); // Middleware para entender requisições em formato JSON
+
 app.use(cors()); // Middleware para habilitar CORS
 
 // Rota GET para listar usuários
