@@ -4,6 +4,8 @@ import express from "express"; // Importando o Express para criar o servidor web
 
 const prisma = new PrismaClient(); // Instanciando o cliente Prisma
 
+const PORT = process.env.PORT || 4001;
+
 const app = express(); // Criando uma instância do Express
 
 app.use(express.json()); // Middleware para entender requisições em formato JSON
@@ -68,10 +70,13 @@ app.delete("/usuarios/:id", async (req, res) => {
   }
 });
 
-// Iniciando o servidor na porta 3000
-app.listen(3001, () => {
-  console.log("Servidor rodando na porta 3001");
+
+
+// Inicia o servidor na porta 4001
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+
 
 // - CRIAR ok
 // - LER ok
