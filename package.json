@@ -9,9 +9,9 @@
   "scripts": {
     "dev": "nodemon",
     "build": "prisma generate",
-    "vercel-build": "npx prisma migrate deploy",
     "start": "node index.js"
-  },
+},
+
   "keywords": [],
   "author": "André Silva",
   "license": "ISC",
