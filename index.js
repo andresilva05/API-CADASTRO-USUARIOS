@@ -21,6 +21,10 @@ app.get("/usuarios", async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar usuários" }); // Retornando erro ao cliente
   }
 });
+app.get("/", (req, res) => {
+  res.send("API de criação de usuários está rodando!");
+});
+
 
 // Rota POST para criar um novo usuário
 app.post("/usuarios", async (req, res) => {
