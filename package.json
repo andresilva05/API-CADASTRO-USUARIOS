@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "nodemon",
     "build": "prisma generate",
-    "start": "node index.js"
+    "start": "node index.js",
+    "vercel-build": "npx prisma migrate deploy"
 },
 
   "keywords": [],
