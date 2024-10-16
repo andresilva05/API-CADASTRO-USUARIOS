@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"; // Importando o cliente Prisma para se conectar ao banco de dados
-import cors from 'cors' // Importando o middleware CORS para permitir requisições entre diferentes origens (front e back)
+import cors from 'cors'; // Importando o middleware CORS para permitir requisições entre diferentes origens (front e back)
 import express from "express"; // Importando o Express para criar o servidor web
 
 const prisma = new PrismaClient(); // Instanciando o cliente Prisma
@@ -9,7 +9,6 @@ const PORT = process.env.PORT || 4001;
 const app = express(); // Criando uma instância do Express
 
 app.use(express.json()); // Middleware para entender requisições em formato JSON
-
 app.use(cors()); // Middleware para habilitar CORS
 
 // Rota GET para listar usuários
@@ -22,12 +21,6 @@ app.get("/usuarios", async (req, res) => {
     res.status(500).json({ error: "Erro ao buscar usuários" }); // Retornando erro ao cliente
   }
 });
-
-app.get("/", (req, res) => {
-  res.send("API de cadastro de usuários está rodando!");
-});
-
-
 
 // Rota POST para criar um novo usuário
 app.post("/usuarios", async (req, res) => {
@@ -51,7 +44,7 @@ app.put("/usuarios/:id", async (req, res) => {
   try {
     const { id } = req.params; // Pegando o ID dos parâmetros da URL
     const user = await prisma.user.update({
-      where: { id: id }, // Buscando e atualizando o usuário pelo ID
+      where: { id: parseInt(id) }, // Buscando e atualizando o usuário pelo ID (convertendo para inteiro)
       data: {
         email: req.body.email,
         age: req.body.age,
@@ -69,7 +62,7 @@ app.put("/usuarios/:id", async (req, res) => {
 app.delete("/usuarios/:id", async (req, res) => {
   try {
     const { id } = req.params; // Pegando o ID dos parâmetros da URL
-    await prisma.user.delete({ where: { id: id } }); // Deletando o usuário pelo ID
+    await prisma.user.delete({ where: { id: parseInt(id) } }); // Deletando o usuário pelo ID (convertendo para inteiro)
     res.status(200).json({ message: "Usuário deletado com sucesso" }); // Retornando sucesso
   } catch (error) {
     console.log(error); // Logando o erro no console
@@ -77,24 +70,12 @@ app.delete("/usuarios/:id", async (req, res) => {
   }
 });
 
-
+// Rota GET para uma mensagem de teste
+app.get("/", (req, res) => {
+  res.send("API de cadastro de usuários está rodando!");
+});
 
 // Inicia o servidor na porta 4001
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
-
-
-// - CRIAR ok
-// - LER ok
-// - EDITAR ok
-// - DELETAR ok
-// - LISTAR
-// - BUSCAR
-// - FILTRAR
-// - ORDENAR
-
-
-// andresilvadev05
-// 22082005
-
